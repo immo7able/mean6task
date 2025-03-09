@@ -4,6 +4,13 @@ const { DEFAULT_TASK_STATUS } = require("../config/constants");
 module.exports = {
   // Получить список всех задач
   getAllTasks(req, res) {
+    const { authorId } = req.query;
+
+    if (authorId) {
+      const tasks = Task.getByUserId(parseInt(authorId));
+      return res.json(tasks);
+    }
+
     res.json(Task.getAll());
   },
 
@@ -23,6 +30,7 @@ module.exports = {
     const newTask = Task.create({
       title: req.body.title,
       completed: req.body.completed || DEFAULT_TASK_STATUS,
+      authorId: req.body.authorId
     });
 
     res.status(201).json(newTask);

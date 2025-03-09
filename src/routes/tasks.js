@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/tasks');
-const validator = require('../middleware/validator');
+const validator = require('../middleware/taskValidator');
 
 // Маршруты для работы с задачами
 router.get('/', controller.getAllTasks);       // GET /tasks

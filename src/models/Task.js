@@ -22,6 +22,15 @@ module.exports = {
   },
 
   /**
+   * Получить задачи по ID пользователя
+   * @param {number} authorId - Идентификатор пользователя
+   * @returns {Array} Массив задач пользователя
+   */
+  getByUserId(authorId) {
+    return tasks.filter((task) => task.authorId === authorId);
+  },
+
+  /**
    * Создать новую задачу
    * @param {Object} data - Данные задачи
    * @returns {Object} Созданная задача
@@ -31,6 +40,7 @@ module.exports = {
       id: ++lastId,
       completed: data.completed || false,
       title: data.title,
+      authorId: data.authorId,
     };
     tasks.push(newTask);
     return newTask;
@@ -58,6 +68,17 @@ module.exports = {
   delete(id) {
     const initialLength = tasks.length;
     tasks = tasks.filter((task) => task.id !== id);
+    return tasks.length !== initialLength;
+  },
+
+  /**
+   * Удалить все задачи пользователя
+   * @param {number} authorId - Идентификатор пользователя
+   * @returns {boolean} Успех операции
+   */
+  deleteAllByUserId(authorId) {
+    const initialLength = tasks.length;
+    tasks = tasks.filter((task) => task.authorId !== authorId);
     return tasks.length !== initialLength;
   },
 };
